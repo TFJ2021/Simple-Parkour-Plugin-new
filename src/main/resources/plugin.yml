@@ -1,6 +1,6 @@
 name: simpleParkour
 description: A simple parkour plugin
-version: '1.1.7'
+version: '1.1.8'
 main: simple.parkour.Main
 api-version: '1.21'
 prefix: SP

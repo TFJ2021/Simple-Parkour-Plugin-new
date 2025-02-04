@@ -71,8 +71,6 @@ public class InWorldSystem implements CommandExecutor, Listener {
         Player player = event.getPlayer();
         if (from.getBlockX() != to.getBlockX() || from.getBlockZ() != to.getBlockZ() || from.getBlockY() != to.getBlockY()) {
             Block targetBlock = to.getBlock().getRelative(BlockFace.DOWN);
-            System.out.println(targetBlock.toString());
-            System.out.println(playerNextJump.get(player.getUniqueId()).toString());
             Location nextJumLocation;
             UUID uuid = player.getUniqueId();
             if (playerNextJump.containsKey(uuid) && player.getLocation().getBlockY() < (playerNextJump.get(uuid)).getBlockY()) {
@@ -88,7 +86,7 @@ public class InWorldSystem implements CommandExecutor, Listener {
                 blocks.remove(uuid);
                 points.remove(uuid);
 
-            } else if (targetBlock.getType() == nextBlockMaterial && playerNextJump.get(uuid) != null && playerNextJump.get(uuid).equals(targetBlock)) { // TODO | The diamond block is not recognized. You should try checking the coordinates
+            } else if (targetBlock.getType() == nextBlockMaterial && playerNextJump.get(uuid) != null && playerNextJump.get(uuid).equals(targetBlock.getLocation())) {
                 // Next Block System
                 targetBlock.setType(doneBlocksMaterial);
                 player.playSound(targetBlock.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
