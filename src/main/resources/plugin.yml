@@ -1,0 +1,6 @@
+name: simpleParkour
+version: '1.0'
+main: simpleParkour.plugin.Main
+api-version: '1.21'
+prefix: MAIN
+authors: [ TFJ_5183 ]
