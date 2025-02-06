@@ -2,10 +2,8 @@ package simple.parkour;
 
 import java.util.*;
 
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Particle;
-import org.bukkit.Sound;
+import net.kyori.adventure.text.Component;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.command.Command;
@@ -90,9 +88,18 @@ public class InWorldSystem implements CommandExecutor, Listener {
                 // Next Block System
                 targetBlock.setType(doneBlocksMaterial);
                 player.playSound(targetBlock.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1.0F, 1.0F);
-                int i = points.getOrDefault(uuid, 0) + 1;
-                points.put(uuid, i);
-                player.sendActionBar(i + " Points");
+                int points = InWorldSystem.points.getOrDefault(uuid, 0) + 1;
+                InWorldSystem.points.put(uuid, points);
+                String color;
+
+                switch (points) {
+                    case 25 -> color = "§3";
+                    case 50,100,150,200,250 -> color = "§e";
+                    case 159 -> color = "§b"; // Developer Rekord
+                    default -> color = "";
+                }
+
+                player.sendActionBar(Component.text(color + points + " Point" + (points > 1 ? "s" : "")));
 
                 do {
                     nextJumLocation = calcNextJump(targetBlock.getLocation());
@@ -139,5 +146,18 @@ public class InWorldSystem implements CommandExecutor, Listener {
     private int getRandomDelta(int bound) {
         Random random = new Random();
         return bound == 1 ? random.nextInt(2) : random.nextInt(bound * 2) - bound;
+    }
+
+    public static void removeBlocks() {
+        if (blocks.isEmpty()) return;
+        for (List<Location> value : blocks.values()) {
+            for (Location location : value) location.getBlock().setType(Material.AIR);
+        }
+
+
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            Block block = player.getLocation().add(0, -1, 0).getBlock();
+            if (block.getType() == Material.AIR) block.setType(Material.DEEPSLATE_TILES);
+        }
     }
 }

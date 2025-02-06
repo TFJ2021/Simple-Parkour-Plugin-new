@@ -23,6 +23,12 @@ public final class Main extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        // Clears the Blocks
+        InWorldSystem.removeBlocks();
+
+        // Message
+        Bukkit.getPluginManager().getPlugin("simpleParkour").getLogger().info("Removed Parkour Blocks");
+
         // Stop-Done Message
         getLogger().info("Disabled " + getPluginMeta().getName() + " v" + getPluginMeta().getVersion());
     }
