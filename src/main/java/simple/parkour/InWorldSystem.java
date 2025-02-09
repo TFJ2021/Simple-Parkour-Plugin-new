@@ -18,6 +18,8 @@ import org.jetbrains.annotations.NotNull;
 
 public class InWorldSystem implements CommandExecutor, Listener {
 
+    // Issue | None AIR blocks get replaced
+
     // Settings
     private static final Material doneBlocksMaterial = Material.IRON_BLOCK;
     private static final Material nextBlockMaterial = Material.DIAMOND_BLOCK;
@@ -156,7 +158,6 @@ public class InWorldSystem implements CommandExecutor, Listener {
         for (List<Location> value : blocks.values()) {
             for (Location location : value) location.getBlock().setType(Material.AIR);
         }
-
 
         for (Player player : Bukkit.getOnlinePlayers()) {
             Block block = player.getLocation().add(0, -1, 0).getBlock();
