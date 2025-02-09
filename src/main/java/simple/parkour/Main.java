@@ -6,7 +6,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Main extends JavaPlugin {
 
-    public static String color = "§b";
+    public final static String color = "§b";
 
     @Override
     public void onEnable() {

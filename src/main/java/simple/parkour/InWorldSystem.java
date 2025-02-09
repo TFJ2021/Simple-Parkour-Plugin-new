@@ -43,11 +43,13 @@ public class InWorldSystem implements CommandExecutor, Listener {
                 return false;
             }
 
+            // Start Parkour System
+
             if (!blockUnder.getType().equals(Material.AIR)) {
                 player.teleport(player.getLocation().add(0.0, 30.0, 0.0));
+                blockUnder = player.getWorld().getBlockAt(player.getLocation().add(0.0, -1.0, 0.0));
             }
 
-            blockUnder = player.getWorld().getBlockAt(player.getLocation().add(0.0, -1.0, 0.0));
             player.sendMessage("§8[" + color + "parkour§8]§r The parkour has startet!");
             blockUnder.setType(Material.IRON_BLOCK);
             Location nextJumLocation = calcNextJump(blockUnder.getLocation());
@@ -116,6 +118,7 @@ public class InWorldSystem implements CommandExecutor, Listener {
 
     @EventHandler
     public void breakBlock(BlockBreakEvent event) {
+        // Cant Mine a Parkour Block System
         Player player = event.getPlayer();
         boolean parkourBlock = false;
         Block block = event.getBlock();
@@ -149,7 +152,7 @@ public class InWorldSystem implements CommandExecutor, Listener {
     }
 
     public static void removeBlocks() {
-        if (blocks.isEmpty()) return;
+        if (blocks.keySet().isEmpty()) return;
         for (List<Location> value : blocks.values()) {
             for (Location location : value) location.getBlock().setType(Material.AIR);
         }
